@@ -1,0 +1,52 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ .Values.name }}
+  labels:
+    app: {{ .Values.name }}
+spec:
+  replicas: {{ .Values.deployment.replicas | default 1 }}
+  selector:
+    matchLabels:
+      app: {{ .Values.name }}
+  template:
+    metadata:
+      labels:
+        app: {{ .Values.name }}
+    spec:
+      containers:
+        - name: {{ .Values.name }}
+          {{- with .Values.deployment }}
+          image: {{ .image }}:{{ .tag }}
+          imagePullPolicy: {{ .imagePullPolicy }}
+          ports:
+            - containerPort: {{ .containerPort | default 80 }}
+          {{- end }}
+
+          resources:
+            requests:
+              memory: "128Mi"
+              cpu: "100m"
+            limits:
+              memory: "512Mi"
+              cpu: "500m"
+
+          volumeMounts:
+            - name: firebase
+              mountPath: "/opt/firebase"
+              readOnly: true
+
+          envFrom:
+            - secretRef:
+                name: agrio-secrets
+
+          env:
+            - name: GOOGLE_APPLICATION_CREDENTIALS
+              value: "/opt/firebase/agriofinans-gac.json"
+
+      imagePullSecrets:
+        - name: sophiecr-secret
+      volumes:
+        - name: firebase
+          secret:
+            secretName: agrio-secrets

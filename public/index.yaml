@@ -1,0 +1,14 @@
+apiVersion: v1
+entries:
+  agrio-ms-api:
+  - apiVersion: v2
+    appVersion: 1.16.0
+    created: "2021-10-21T10:28:33.048647+03:00"
+    description: A Helm chart for Kubernetes
+    digest: ccaa17d31494feed11038b05ae49d3f8d4c575ec8ac601e77cfe6f89bcb74eef
+    name: agrio-ms-api
+    type: application
+    urls:
+    - https://sophieteam.github.io/agrio-helm/agrio-ms-api-0.1.0.tgz
+    version: 0.1.0
+generated: "2021-10-21T10:28:33.048042+03:00"

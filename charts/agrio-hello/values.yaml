@@ -1,0 +1,15 @@
+name: agrio-hello
+deployment:
+  replicas: 3
+  image: registry.digitalocean.com/sophiecr/agrio-accounting
+  tag: 1.0.2
+  imagePullPolicy: IfNotPresent
+  containerPort: 5000
+  env:
+    - name: REQUEST_ADDRESS
+      value: app-2-service
+    - name: VERSION
+      value: 1.0.2
+service:
+  port: 80
+  targetPort: 5000
